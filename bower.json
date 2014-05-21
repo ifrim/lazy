@@ -1,0 +1,19 @@
+{
+  "name": "lazy",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ifrim/lazy",
+  "authors": [
+    "ifrim <ifrimvlad@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lazy.js": "~0.3.2"
+  }
+}
