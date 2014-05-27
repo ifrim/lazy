@@ -5,6 +5,7 @@ module.exports = function(grunt) {
     
 		traceur: {
 			options: {
+				blockBinding: true
 			},
 			app: {
 				files: {
