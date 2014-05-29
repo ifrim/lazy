@@ -12,8 +12,7 @@
 		</form>
 	</header>
 	<section id="main">
-		<input id="toggle-all" type="checkbox">
-		<label for="toggle-all">Mark all as complete</label>
+		<input id="toggle-all" type="checkbox" title="Mark all as complete">
 		<ul id="todo-list"></ul>
 	</section>
 	<footer id="footer">
@@ -29,7 +28,7 @@
 				<a class="{selected: status == 'completed'}" href="">Completed</a>
 			</li>
 		</ul>
-		<button id="clear-completed">Clear completed (completed count)</button>
+		<button id="clear-completed">Clear completed (<span></span>)</button>
 	</footer>
 </section>
 <footer id="info">
