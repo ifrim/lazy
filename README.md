@@ -1,2 +1,1 @@
-lazy
-====
+A [TodoMVC] (http://todomvc.com/) implementation using [Lazy.js] (http://danieltao.com/lazy.js/) and [traceur] (https://github.com/google/traceur-compiler).
