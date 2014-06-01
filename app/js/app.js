@@ -1,5 +1,6 @@
 (function() {
- 	var app = {}, items = Lazy([]),	$list = $('#todo-list'), lastId = 0
+    'use strict';
+	var app = {}, items = Lazy([]),	$list = $('#todo-list'), lastId = 0;
 	
 	/**
 	 * Adds a todo
@@ -97,7 +98,7 @@
 			item.completed = !item.completed;
 		}));
 		
-		$list.on('click', '.destroy', app.eventCallback(id => app.remove({id})));
+		$list.on('click', '.destroy', app.eventCallback(id => app.remove({id: id})));
 		
 		$list.on('dblclick', 'label', app.eventCallback(id => app.getItem(id).editing = true, id => $list.find(`[data-id=${id}]`).find('.edit').focus()));
 		

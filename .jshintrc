@@ -1,0 +1,7 @@
+{
+	"esnext": true,
+	"eqeqeq": true,
+	"expr": true,
+	"browser": true,
+	"devel": true
+}
