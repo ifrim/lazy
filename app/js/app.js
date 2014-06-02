@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-	var app = {}, items = Lazy([]),	$list = $('#todo-list'), lastId = 0;
+	var app = {}, items = Lazy([]),	$list = $('#todo-list'), lastId = 0, status = 'all';
 	
 	/**
 	 * Adds a todo
@@ -19,7 +19,7 @@
 	 * 
 	 * @param {object} item - the todo item object
 	 */
-	app.remove = item => items = items.reject(item);
+	app.remove = itemId => items = items.reject({id: itemId});
 	
 	/**
 	 * Gets a todo based on it's id
@@ -30,12 +30,24 @@
 	app.getItem = itemId => items.where({id: itemId}).toArray()[0];
 	
 	/**
+	 * Changes the status of the todolist to 'all', 'active', or 'completed'
+	 * @param {string} newStatus - the new status
+	 */
+	app.changeStatus = newStatus => status = newStatus;
+	
+	/**
 	 * Renders the UI
 	 */
 	app.render = () => {
+		var displayItems = Lazy(items.toArray());
 		
-		// render the todos
-		let cnt = items.reduce((prev, item, index) => {
+		switch(status) {
+			case 'active': displayItems = displayItems.where({completed: false}); break;
+			case 'completed': displayItems = displayItems.where({completed: true}); break;
+		}
+		
+		// render the list
+		let cnt = displayItems.reduce((prev, item, index) => {
 			var classesDefinition = {
 					completed: item.completed, 
 					editing: item.editing
@@ -52,7 +64,6 @@
 				`	<form><input class="edit" value="${item.name}"></form>` +
 				`</li>`;
 		}, '');
-		
 		$list.html(cnt);
 		
 		// render the remaining uncompleted items
@@ -64,7 +75,10 @@
 		$('#clear-completed')[completedCount ? 'show' : 'hide']().find('span').text(completedCount);
 		
 		// set 'toggle-all' state
-		$('#toggle-all').prop('checked', items.where({completed: true}).size() === items.size());
+		$('#toggle-all').prop('checked', displayItems.where({completed: true}).size() === items.size());
+		
+		// set status
+		$('#filters').find('a').removeClass('selected').filter(`[data-status="${status}"]`).addClass('selected');
 	};
 	
 	/**
@@ -98,7 +112,7 @@
 			item.completed = !item.completed;
 		}));
 		
-		$list.on('click', '.destroy', app.eventCallback(id => app.remove({id: id})));
+		$list.on('click', '.destroy', app.eventCallback(id => app.remove(id)));
 		
 		$list.on('dblclick', 'label', app.eventCallback(id => app.getItem(id).editing = true, id => $list.find(`[data-id=${id}]`).find('.edit').focus()));
 		
@@ -129,7 +143,15 @@
 		
 		// clear completed
 		$('#clear-completed').on('click', function() {
-			items.where({completed: true}).pluck('id').each(itemId => app.remove(app.getItem(itemId)));
+			items.where({completed: true}).pluck('id').each(itemId => app.remove(itemId));
+			app.render();
+		});
+		
+		// change status
+		$('#filters').on('click', 'a', function(e) {
+			e.preventDefault();
+			app.changeStatus($(this).data('status'));
+			console.log($(this).data('status'), '::', status);
 			app.render();
 		});
 	};
