@@ -156,10 +156,8 @@
 		});
 	};
 	
-	var dump = () => console.log(items.toArray());
-	
-	app.add('as');
-	app.add('qweqwe');
+	app.add('buy groceries');
+	app.add('finish todo project');
 	
 	app.bindEvents();
 	app.render();
