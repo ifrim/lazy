@@ -151,7 +151,6 @@
 		$('#filters').on('click', 'a', function(e) {
 			e.preventDefault();
 			app.changeStatus($(this).data('status'));
-			console.log($(this).data('status'), '::', status);
 			app.render();
 		});
 	};
